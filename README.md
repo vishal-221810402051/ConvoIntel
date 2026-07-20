@@ -48,9 +48,15 @@ Backend Phase 7 adds provider-isolated temporal intelligence for completed Phase
 
 See [docs/phase-07-temporal-intelligence.md](docs/phase-07-temporal-intelligence.md).
 
+## Phase 8 Capability
+
+Backend Phase 8 adds deterministic local calendar recommendation generation for completed Phase 7 packages. It validates the full Phase 1-7 artifact chain, projects explicit Phase 6 intelligence links and trusted Phase 7 temporal components into reviewable recommendations, preserves evidence and provenance, records exclusions, and writes canonical recommendation artifacts plus metadata. It does not use an API key, model call, calendar provider, event creation, synchronization, reminders, notifications, reports, endpoints, databases, Android sync, search, or mission-specific profiles.
+
+See [docs/phase-08-calendar-recommendations.md](docs/phase-08-calendar-recommendations.md).
+
 ## Requirements
 
-Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH. Phase 4, Phase 5, and Phase 6 live validation require a usable OpenAI API key in `OPENAI_API_KEY` or `CONVOINTEL_OPENAI_API_KEY`.
+Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH. Phase 4, Phase 5, Phase 6, and Phase 7 live validation require a usable OpenAI API key in `OPENAI_API_KEY` or `CONVOINTEL_OPENAI_API_KEY`. Phase 8 is deterministic and local once Phase 7 artifacts already exist.
 
 ```powershell
 python --version
