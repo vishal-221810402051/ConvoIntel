@@ -4,7 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, field_validator
+from pydantic import AliasChoices, Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from backend.app.core.paths import default_data_dir, resolve_repository_path
@@ -12,6 +12,7 @@ from backend.app.core.paths import default_data_dir, resolve_repository_path
 APPLICATION_TITLE = "Convointel Backend"
 SERVICE_IDENTIFIER = "convointel-backend"
 API_VERSION = "v1"
+TRANSCRIPTION_MODEL = "gpt-4o-transcribe-diarize"
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 VALID_LOG_LEVELS = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
@@ -37,6 +38,14 @@ class Settings(BaseSettings):
     ffmpeg_binary: str = "ffmpeg"
     ffprobe_binary: str = "ffprobe"
     normalization_timeout_seconds: int = Field(default=1800, ge=1, le=86400)
+    openai_api_key: SecretStr | None = Field(
+        default=None,
+        validation_alias=AliasChoices("CONVOINTEL_OPENAI_API_KEY", "OPENAI_API_KEY"),
+    )
+    transcription_model: str = TRANSCRIPTION_MODEL
+    transcription_timeout_seconds: int = Field(default=1800, ge=1, le=86400)
+    transcription_max_retries: int = Field(default=2, ge=0, le=10)
+    transcription_language: str | None = None
 
     @field_validator("environment")
     @classmethod
@@ -81,6 +90,49 @@ class Settings(BaseSettings):
         normalized = value.strip()
         if not normalized:
             raise ValueError("FFmpeg and FFprobe binary settings must not be empty")
+        return normalized
+
+    @field_validator("openai_api_key", mode="before")
+    @classmethod
+    def normalize_openai_api_key(cls, value: object) -> object:
+        if value is None:
+            return None
+        if isinstance(value, SecretStr):
+            secret_value = value.get_secret_value().strip()
+            return SecretStr(secret_value) if secret_value else None
+        if isinstance(value, str):
+            normalized = value.strip()
+            return normalized or None
+        raise ValueError("OpenAI API key must be a string")
+
+    @field_validator("transcription_model")
+    @classmethod
+    def validate_transcription_model(cls, value: str) -> str:
+        normalized = value.strip()
+        if normalized != TRANSCRIPTION_MODEL:
+            raise ValueError(
+                f"CONVOINTEL_TRANSCRIPTION_MODEL must be {TRANSCRIPTION_MODEL}"
+            )
+        return normalized
+
+    @field_validator("transcription_language", mode="before")
+    @classmethod
+    def validate_transcription_language(cls, value: object) -> str | None:
+        if value is None or value == "":
+            return None
+        if not isinstance(value, str):
+            raise ValueError("CONVOINTEL_TRANSCRIPTION_LANGUAGE must be a string")
+        normalized = value.strip()
+        if not normalized:
+            return None
+        if len(normalized) != 2 or not normalized.isascii() or not normalized.islower():
+            raise ValueError(
+                "CONVOINTEL_TRANSCRIPTION_LANGUAGE must be a lowercase ISO-639-1 code"
+            )
+        if not normalized.isalpha():
+            raise ValueError(
+                "CONVOINTEL_TRANSCRIPTION_LANGUAGE must be a lowercase ISO-639-1 code"
+            )
         return normalized
 
     @property

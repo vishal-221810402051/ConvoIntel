@@ -10,6 +10,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.115,<1.0",
+    "openai>=2.46,<3",
     "uvicorn>=0.30,<1.0",
     "pydantic-settings>=2.4,<3.0",
 ]
@@ -23,8 +24,11 @@ dev = [
 [tool.pytest.ini_options]
 testpaths = ["backend/tests"]
 pythonpath = ["."]
-addopts = "-ra --basetemp=.test-artifacts/tmp"
-cache_dir = ".test-artifacts/cache"
+addopts = [
+    "-ra",
+    "-p",
+    "no:cacheprovider",
+]
 
 [tool.setuptools.packages.find]
 include = ["backend*"]

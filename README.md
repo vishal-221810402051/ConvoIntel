@@ -24,9 +24,15 @@ Backend Phase 3 adds local audio normalization for completed meeting packages. I
 
 See [docs/phase-03-audio-normalization.md](docs/phase-03-audio-normalization.md).
 
+## Phase 4 Capability
+
+Backend Phase 4 adds provider-isolated diarized raw transcription for normalized meeting packages. It verifies Phase 3 metadata and audio integrity, sends only `normalized/audio.wav` to the configured OpenAI transcription provider, and writes canonical raw transcript artifacts plus transcription metadata. It does not add cleanup, summaries, intelligence extraction, reporting, uploads, or Android sync.
+
+See [docs/phase-04-diarized-transcription.md](docs/phase-04-diarized-transcription.md).
+
 ## Requirements
 
-Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH.
+Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH. Phase 4 live validation requires a usable OpenAI API key in `OPENAI_API_KEY` or `CONVOINTEL_OPENAI_API_KEY`.
 
 ```powershell
 python --version
@@ -101,6 +107,12 @@ Convointel reads these environment variables:
 | `CONVOINTEL_FFMPEG_BINARY` | `ffmpeg` |
 | `CONVOINTEL_FFPROBE_BINARY` | `ffprobe` |
 | `CONVOINTEL_NORMALIZATION_TIMEOUT_SECONDS` | `1800` |
+| `OPENAI_API_KEY` | unset |
+| `CONVOINTEL_OPENAI_API_KEY` | unset |
+| `CONVOINTEL_TRANSCRIPTION_MODEL` | `gpt-4o-transcribe-diarize` |
+| `CONVOINTEL_TRANSCRIPTION_TIMEOUT_SECONDS` | `1800` |
+| `CONVOINTEL_TRANSCRIPTION_MAX_RETRIES` | `2` |
+| `CONVOINTEL_TRANSCRIPTION_LANGUAGE` | unset |
 
 Example safe defaults are provided in `.env.example`. Do not commit real `.env` files.
 
