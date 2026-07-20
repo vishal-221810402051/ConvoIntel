@@ -13,6 +13,7 @@ APPLICATION_TITLE = "Convointel Backend"
 SERVICE_IDENTIFIER = "convointel-backend"
 API_VERSION = "v1"
 TRANSCRIPTION_MODEL = "gpt-4o-transcribe-diarize"
+CLEANUP_MODEL = "gpt-5-mini-2025-08-07"
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 VALID_LOG_LEVELS = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
@@ -46,6 +47,11 @@ class Settings(BaseSettings):
     transcription_timeout_seconds: int = Field(default=1800, ge=1, le=86400)
     transcription_max_retries: int = Field(default=2, ge=0, le=10)
     transcription_language: str | None = None
+    cleanup_model: str = CLEANUP_MODEL
+    cleanup_timeout_seconds: int = Field(default=900, ge=1, le=86400)
+    cleanup_max_retries: int = Field(default=2, ge=0, le=10)
+    cleanup_max_batch_characters: int = Field(default=50000, ge=1, le=1000000)
+    cleanup_max_output_tokens: int = Field(default=16000, ge=1, le=100000)
 
     @field_validator("environment")
     @classmethod
@@ -113,6 +119,14 @@ class Settings(BaseSettings):
             raise ValueError(
                 f"CONVOINTEL_TRANSCRIPTION_MODEL must be {TRANSCRIPTION_MODEL}"
             )
+        return normalized
+
+    @field_validator("cleanup_model")
+    @classmethod
+    def validate_cleanup_model(cls, value: str) -> str:
+        normalized = value.strip()
+        if normalized != CLEANUP_MODEL:
+            raise ValueError(f"CONVOINTEL_CLEANUP_MODEL must be {CLEANUP_MODEL}")
         return normalized
 
     @field_validator("transcription_language", mode="before")

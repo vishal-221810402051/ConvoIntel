@@ -30,9 +30,15 @@ Backend Phase 4 adds provider-isolated diarized raw transcription for normalized
 
 See [docs/phase-04-diarized-transcription.md](docs/phase-04-diarized-transcription.md).
 
+## Phase 5 Capability
+
+Backend Phase 5 adds provider-isolated transcript cleanup for completed Phase 4 packages. It verifies raw transcript artifacts and transcription metadata before any provider call, sends transcript segments to the OpenAI Responses API as untrusted data, and writes canonical cleaned transcript artifacts plus cleanup metadata. It preserves segment IDs, timestamps, anonymous speaker labels, language, and protected tokens. It does not add summaries, decisions, action items, owners, risks, calendar logic, reports, endpoints, databases, uploads, or Android sync.
+
+See [docs/phase-05-transcript-cleanup.md](docs/phase-05-transcript-cleanup.md).
+
 ## Requirements
 
-Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH. Phase 4 live validation requires a usable OpenAI API key in `OPENAI_API_KEY` or `CONVOINTEL_OPENAI_API_KEY`.
+Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH. Phase 4 and Phase 5 live validation require a usable OpenAI API key in `OPENAI_API_KEY` or `CONVOINTEL_OPENAI_API_KEY`.
 
 ```powershell
 python --version
@@ -85,7 +91,7 @@ api_version : v1
 python -m pytest
 ```
 
-Pytest writes generated temporary and cache files under `.test-artifacts/`, which is ignored by Git. This keeps tests independent of the Windows system temporary directory and does not require global Windows permission changes.
+Pytest's nonessential cache provider is disabled for portability. Temporary files use the normal pytest temporary directory behavior.
 
 For strict warning validation, run:
 
@@ -113,6 +119,11 @@ Convointel reads these environment variables:
 | `CONVOINTEL_TRANSCRIPTION_TIMEOUT_SECONDS` | `1800` |
 | `CONVOINTEL_TRANSCRIPTION_MAX_RETRIES` | `2` |
 | `CONVOINTEL_TRANSCRIPTION_LANGUAGE` | unset |
+| `CONVOINTEL_CLEANUP_MODEL` | `gpt-5-mini-2025-08-07` |
+| `CONVOINTEL_CLEANUP_TIMEOUT_SECONDS` | `900` |
+| `CONVOINTEL_CLEANUP_MAX_RETRIES` | `2` |
+| `CONVOINTEL_CLEANUP_MAX_BATCH_CHARACTERS` | `50000` |
+| `CONVOINTEL_CLEANUP_MAX_OUTPUT_TOKENS` | `16000` |
 
 Example safe defaults are provided in `.env.example`. Do not commit real `.env` files.
 
