@@ -42,6 +42,12 @@ Backend Phase 6 adds provider-isolated general decision intelligence for complet
 
 See [docs/phase-06-general-decision-intelligence.md](docs/phase-06-general-decision-intelligence.md).
 
+## Phase 7 Capability
+
+Backend Phase 7 adds provider-isolated temporal intelligence for completed Phase 6 packages. It validates the full Phase 1-6 artifact chain, accepts an optional explicit runtime meeting reference datetime plus IANA timezone, sends only cleaned transcript segments and limited temporal Phase 6 context to the OpenAI Responses API as untrusted data, and writes canonical temporal intelligence plus metadata. It extracts grounded temporal expressions, normalizes supported dates, times, ranges, durations, recurrences, reminders-as-data, and locally derived gaps without using intake time as meeting time. It does not add calendar sync, event creation, scheduling, notifications, reports, endpoints, databases, Android sync, search, or mission-specific profiles.
+
+See [docs/phase-07-temporal-intelligence.md](docs/phase-07-temporal-intelligence.md).
+
 ## Requirements
 
 Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH. Phase 4, Phase 5, and Phase 6 live validation require a usable OpenAI API key in `OPENAI_API_KEY` or `CONVOINTEL_OPENAI_API_KEY`.
@@ -136,6 +142,12 @@ Convointel reads these environment variables:
 | `CONVOINTEL_INTELLIGENCE_MAX_INPUT_CHARACTERS` | `500000` |
 | `CONVOINTEL_INTELLIGENCE_MAX_OUTPUT_TOKENS` | `32000` |
 | `CONVOINTEL_INTELLIGENCE_MAX_ITEMS_PER_CATEGORY` | `100` |
+| `CONVOINTEL_TEMPORAL_MODEL` | `gpt-5-mini-2025-08-07` |
+| `CONVOINTEL_TEMPORAL_TIMEOUT_SECONDS` | `1200` |
+| `CONVOINTEL_TEMPORAL_MAX_RETRIES` | `2` |
+| `CONVOINTEL_TEMPORAL_MAX_INPUT_CHARACTERS` | `600000` |
+| `CONVOINTEL_TEMPORAL_MAX_OUTPUT_TOKENS` | `24000` |
+| `CONVOINTEL_TEMPORAL_MAX_ITEMS` | `300` |
 
 Example safe defaults are provided in `.env.example`. Do not commit real `.env` files.
 

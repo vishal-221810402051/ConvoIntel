@@ -15,6 +15,7 @@ API_VERSION = "v1"
 TRANSCRIPTION_MODEL = "gpt-4o-transcribe-diarize"
 CLEANUP_MODEL = "gpt-5-mini-2025-08-07"
 INTELLIGENCE_MODEL = "gpt-5-mini-2025-08-07"
+TEMPORAL_MODEL = "gpt-5-mini-2025-08-07"
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 VALID_LOG_LEVELS = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
@@ -63,6 +64,12 @@ class Settings(BaseSettings):
     )
     intelligence_max_output_tokens: int = Field(default=32000, ge=1, le=100000)
     intelligence_max_items_per_category: int = Field(default=100, ge=1, le=500)
+    temporal_model: str = TEMPORAL_MODEL
+    temporal_timeout_seconds: int = Field(default=1200, ge=1, le=86400)
+    temporal_max_retries: int = Field(default=2, ge=0, le=10)
+    temporal_max_input_characters: int = Field(default=600000, ge=1, le=5000000)
+    temporal_max_output_tokens: int = Field(default=24000, ge=1, le=100000)
+    temporal_max_items: int = Field(default=300, ge=1, le=1000)
 
     @field_validator("environment")
     @classmethod
@@ -148,6 +155,14 @@ class Settings(BaseSettings):
             raise ValueError(
                 f"CONVOINTEL_INTELLIGENCE_MODEL must be {INTELLIGENCE_MODEL}"
             )
+        return normalized
+
+    @field_validator("temporal_model")
+    @classmethod
+    def validate_temporal_model(cls, value: str) -> str:
+        normalized = value.strip()
+        if normalized != TEMPORAL_MODEL:
+            raise ValueError(f"CONVOINTEL_TEMPORAL_MODEL must be {TEMPORAL_MODEL}")
         return normalized
 
     @field_validator("transcription_language", mode="before")
