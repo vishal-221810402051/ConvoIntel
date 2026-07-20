@@ -34,6 +34,9 @@ class Settings(BaseSettings):
     port: int = Field(default=8765, ge=1, le=65535)
     log_level: LogLevel = "INFO"
     data_dir: Path = Field(default_factory=default_data_dir)
+    ffmpeg_binary: str = "ffmpeg"
+    ffprobe_binary: str = "ffprobe"
+    normalization_timeout_seconds: int = Field(default=1800, ge=1, le=86400)
 
     @field_validator("environment")
     @classmethod
@@ -71,6 +74,14 @@ class Settings(BaseSettings):
         if isinstance(value, (str, Path)):
             return resolve_repository_path(value)
         raise ValueError("CONVOINTEL_DATA_DIR must be a filesystem path")
+
+    @field_validator("ffmpeg_binary", "ffprobe_binary")
+    @classmethod
+    def validate_executable_name(cls, value: str) -> str:
+        normalized = value.strip()
+        if not normalized:
+            raise ValueError("FFmpeg and FFprobe binary settings must not be empty")
+        return normalized
 
     @property
     def meetings_dir(self) -> Path:

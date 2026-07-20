@@ -18,12 +18,20 @@ Backend Phase 2 adds local source-audio intake into a canonical meeting package 
 
 See [docs/phase-02-audio-intake.md](docs/phase-02-audio-intake.md).
 
+## Phase 3 Capability
+
+Backend Phase 3 adds local audio normalization for completed meeting packages. It verifies the Phase 2 manifest and source checksum, converts the preserved source audio to canonical mono 16 kHz PCM S16LE WAV with FFmpeg, validates the output with FFprobe, and writes separate normalization metadata. It does not add transcription, intelligence, uploads, or Android sync.
+
+See [docs/phase-03-audio-normalization.md](docs/phase-03-audio-normalization.md).
+
 ## Requirements
 
-Use Windows PowerShell with Python 3.11 or newer.
+Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH.
 
 ```powershell
 python --version
+ffmpeg -version
+ffprobe -version
 ```
 
 ## Setup
@@ -90,6 +98,9 @@ Convointel reads these environment variables:
 | `CONVOINTEL_PORT` | `8765` |
 | `CONVOINTEL_LOG_LEVEL` | `INFO` |
 | `CONVOINTEL_DATA_DIR` | `<repository-root>/data` |
+| `CONVOINTEL_FFMPEG_BINARY` | `ffmpeg` |
+| `CONVOINTEL_FFPROBE_BINARY` | `ffprobe` |
+| `CONVOINTEL_NORMALIZATION_TIMEOUT_SECONDS` | `1800` |
 
 Example safe defaults are provided in `.env.example`. Do not commit real `.env` files.
 
