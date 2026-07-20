@@ -86,3 +86,13 @@ Convointel reads these environment variables:
 | `CONVOINTEL_DATA_DIR` | `<repository-root>/data` |
 
 Example safe defaults are provided in `.env.example`. Do not commit real `.env` files.
+
+## Legacy reference policy
+
+Curated legacy prototype files, when present, live under `legacy_reference/` as reference-only material. They are not runtime code and do not mean any future capability is implemented.
+
+See:
+
+* [legacy_reference/README.md](legacy_reference/README.md)
+* [legacy_reference/reuse-matrix.md](legacy_reference/reuse-matrix.md)
+* [legacy_reference/manifest.json](legacy_reference/manifest.json)

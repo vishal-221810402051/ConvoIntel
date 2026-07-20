@@ -1,0 +1,228 @@
+{
+  "source_repository": "https://github.com/vishal-221810402051/CoE-Decision-Intelligence.git",
+  "source_branch": "main",
+  "source_commit": "27187565b5b6c10581c770c7b4c0b4d79a30f13b",
+  "generated_at": "2026-07-20T14:30:18Z",
+  "policy": "reference_only",
+  "files": [
+    {
+      "source_path": "app/services/audio/intake.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/audio/intake.py",
+      "source_blob_sha": "3f4b7b00448be49dcb4cd8bd51f97c240830e92c",
+      "sha256": "2f6a3a47932dcf3b7e29524260369f06173bbe74fc9bdd2cafe8ad8cdfd8f23e",
+      "category": "audio_intake",
+      "intended_future_phase": "Backend audio intake phase",
+      "reason": "Reference for accepted extensions, meeting-folder creation, source preservation, metadata creation, and temporary-root testing."
+    },
+    {
+      "source_path": "app/models/meeting.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/audio/meeting_model.py",
+      "source_blob_sha": "46ea043836eab6a4e423e9f12fc0f2ec62fcc0b4",
+      "sha256": "9b65b634d808bb64793c81f37aee1c9e40911e59d51621e369a802dfaee7ed70",
+      "category": "audio_intake",
+      "intended_future_phase": "Backend audio intake phase",
+      "reason": "Reference for meeting metadata shape used by audio intake."
+    },
+    {
+      "source_path": "app/services/audio/normalization.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/audio/normalization.py",
+      "source_blob_sha": "1bedfef8588afaf2c7e917f64c4c4f3eb7876e56",
+      "sha256": "bbf33436b94bcb61fccae6432bdc070ca60a69b8aad3901f2487ecb6ba421477",
+      "category": "audio_normalization",
+      "intended_future_phase": "Backend audio normalization phase",
+      "reason": "Reference for FFmpeg command construction, mono conversion, 16 kHz resampling, PCM WAV output, metadata, and failure cleanup."
+    },
+    {
+      "source_path": "app/models/normalization.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/audio/normalization_model.py",
+      "source_blob_sha": "402e5a2b89f65087372f4dd73f1d2a8ce16ab970",
+      "sha256": "b348fd46ec5b3b0117493b92a745dca41ebd9de9e3d77e880331f00d24546b34",
+      "category": "audio_normalization",
+      "intended_future_phase": "Backend audio normalization phase",
+      "reason": "Reference for normalization metadata shape."
+    },
+    {
+      "source_path": "tests/test_audio_intake_smoke.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/audio/test_audio_intake_smoke.py",
+      "source_blob_sha": "183b41b73e1dcaa403402be72f5851d9e7bee1f6",
+      "sha256": "749172d87addb05331bfac0968f0e62a85be339ed31ca2e30ac0428d7a77828a",
+      "category": "audio_intake",
+      "intended_future_phase": "Backend audio intake phase",
+      "reason": "Reference for smoke-test shape and temporary-root audio intake checks."
+    },
+    {
+      "source_path": "scripts/test_audio_normalization.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/audio/test_audio_normalization.py",
+      "source_blob_sha": "d9705872727a897ee68ee3e7b6b9c7e5ab5170c1",
+      "sha256": "da51713e7e1a9ab2362d30b8f01ea95df2c98b6726ab79f2f7cc18ed7b7c8d72",
+      "category": "audio_normalization",
+      "intended_future_phase": "Backend audio normalization phase",
+      "reason": "Reference for normalization validation script shape."
+    },
+    {
+      "source_path": "app/services/calendar/approval_manager.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/calendar/approval_manager.py",
+      "source_blob_sha": "aa6bdc9e4ae66e3eb1b1ed679a8402febea09976",
+      "sha256": "224af3ba394cc17572836cd7b2d765cdd56ba89aae8c3b16812fc0dd94c5be34",
+      "category": "calendar",
+      "intended_future_phase": "Calendar recommendation phase",
+      "reason": "Reference for approval state transitions."
+    },
+    {
+      "source_path": "app/services/calendar/candidate_builder.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/calendar/candidate_builder.py",
+      "source_blob_sha": "0ffcdc4fd49f37ce2d440f5193ad38981253d0c3",
+      "sha256": "849fa4a02dfab15c94af2c03f0cd1ccf88149c7b6cac628e00331a0e59bb928a",
+      "category": "calendar",
+      "intended_future_phase": "Calendar recommendation phase",
+      "reason": "Reference for candidate eligibility and deterministic recommendation construction."
+    },
+    {
+      "source_path": "app/services/calendar/dedup.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/calendar/dedup.py",
+      "source_blob_sha": "00cbb92ba97428e088096e8b0ec351a45254d016",
+      "sha256": "14f162101c96e61f9abb0277a7de62006d9194cd1117104dd0f6deb86c348766",
+      "category": "calendar",
+      "intended_future_phase": "Calendar recommendation phase",
+      "reason": "Reference for deduplication rules."
+    },
+    {
+      "source_path": "app/services/calendar/schemas.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/calendar/schemas.py",
+      "source_blob_sha": "450736a71793331d274bebb1b1038070997eabf6",
+      "sha256": "232d3b3618de1af1daadcf027acd221ad254db95d8dd75a69a3e20e4cdff6f51",
+      "category": "calendar",
+      "intended_future_phase": "Calendar recommendation phase",
+      "reason": "Reference for calendar recommendation data shapes."
+    },
+    {
+      "source_path": "app/services/calendar/storage.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/calendar/storage.py",
+      "source_blob_sha": "aed8d7d80c2e3433008293fa3432b0d6b92f28b5",
+      "sha256": "5c18aac7f87a9332882b873d20e63a041474ecd893715908e5c45844b2ca048d",
+      "category": "calendar",
+      "intended_future_phase": "Calendar recommendation phase",
+      "reason": "Reference for recommendation persistence."
+    },
+    {
+      "source_path": "app/intelligence/actor_resolver.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/intelligence/actor_resolver.py",
+      "source_blob_sha": "bac3266d9885d11d431fbd029b485a8fc151cd5b",
+      "sha256": "bc438caf9348a43dab8f2e18eb618511ae18924ca421183343b653e4536afd72",
+      "category": "intelligence",
+      "intended_future_phase": "Backend intelligence evidence phase",
+      "reason": "Reference for actor identification and alias handling."
+    },
+    {
+      "source_path": "app/validation/consistency_guard.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/intelligence/consistency_guard.py",
+      "source_blob_sha": "e39ae2ef814411d55205e6db74dbacb0eb10719b",
+      "sha256": "0d8b9ade3ec4c3a78ebe8e68661f3b9fb4804bc9d0bd2da98b136ac28bcb8a55",
+      "category": "intelligence",
+      "intended_future_phase": "Backend validation phase",
+      "reason": "Reference for artifact consistency checks."
+    },
+    {
+      "source_path": "app/intelligence/evidence_engine.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/intelligence/evidence_engine.py",
+      "source_blob_sha": "e3f9ac2d8ea82576b9d61ef6b1aad34db24a3a87",
+      "sha256": "25768de794da1cfc2ad8adc50c652aa7d47eb22e011e1875ec1a61f718e3c214",
+      "category": "intelligence",
+      "intended_future_phase": "Backend intelligence evidence phase",
+      "reason": "Reference for transcript-grounded evidence and confidence constraints."
+    },
+    {
+      "source_path": "app/services/meetings/history_service.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/meetings/history_service.py",
+      "source_blob_sha": "23c2ec478faeedf8370aea4b1936b0443fef2a6f",
+      "sha256": "924009aa3354602a205d72af764c80dbf70be9e97ea30546e831b9746fc3873f",
+      "category": "meetings",
+      "intended_future_phase": "Meeting history phase",
+      "reason": "Reference for meeting-history aggregation and path safety."
+    },
+    {
+      "source_path": "app/services/meetings/processing_status_service.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/meetings/processing_status_service.py",
+      "source_blob_sha": "df9a13000323e057151567a8eb9e250820d58b84",
+      "sha256": "bf13fe8e0a7ce70f3033e0e3686b9ed3c1497c148acc9e0fd67db676ca7f774f",
+      "category": "meetings",
+      "intended_future_phase": "Meeting status phase",
+      "reason": "Reference for processing-stage presentation and artifact status."
+    },
+    {
+      "source_path": "app/services/regression/comparator.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/regression/comparator.py",
+      "source_blob_sha": "21f895c151b9631c511d95b48b3e95f9c8e379f9",
+      "sha256": "671a24e43fce40f0bc007a6fd2dad177b34c287674c701c03168e1be0630a172",
+      "category": "regression",
+      "intended_future_phase": "Regression validation phase",
+      "reason": "Reference for output comparison and drift classification."
+    },
+    {
+      "source_path": "app/services/regression/harness.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/regression/harness.py",
+      "source_blob_sha": "e62bbff111a6e4be837249f6727a74fabd969311",
+      "sha256": "f019127e1ad9939da874f7fe50c986d392e8264b07fbdd23094604fe3a7566c9",
+      "category": "regression",
+      "intended_future_phase": "Regression validation phase",
+      "reason": "Reference for regression suite and repeat-run orchestration concepts."
+    },
+    {
+      "source_path": "app/services/regression/normalizer.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/regression/normalizer.py",
+      "source_blob_sha": "efae4c1264f2cede8e014824f8764b956778535f",
+      "sha256": "d6f3c962753737377d451d921dbc5b04802ce569db8c04f86b47dfb7f6f501e7",
+      "category": "regression",
+      "intended_future_phase": "Regression validation phase",
+      "reason": "Reference for deterministic artifact normalization before comparison."
+    },
+    {
+      "source_path": "scripts/repeat_run_check.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/regression/repeat_run_check.py",
+      "source_blob_sha": "4c45b05a134b6796609f2d8f613244d09f04b5ae",
+      "sha256": "b96cf3753da8b66795c8a21d33fcc8633dc7d7bdaee5db8f33001d586feb2049",
+      "category": "regression",
+      "intended_future_phase": "Regression validation phase",
+      "reason": "Reference for repeatability checking."
+    },
+    {
+      "source_path": "scripts/run_regression_suite.py",
+      "destination_path": "legacy_reference/coe_decision_intelligence/regression/run_regression_suite.py",
+      "source_blob_sha": "8bfc007a59fa89d1a4bbe9653906510586497750",
+      "sha256": "d7412c63b70b72c8befe8129e1ec27575369241d234fd0a13629b95b130b7eee",
+      "category": "regression",
+      "intended_future_phase": "Regression validation phase",
+      "reason": "Reference for deterministic-output suite invocation and drift reporting."
+    },
+    {
+      "source_path": "docs/phase-01-audio-intake.md",
+      "destination_path": "legacy_reference/coe_decision_intelligence/supporting_docs/audio-intake.md",
+      "source_blob_sha": "cef0bbcf607672437ef7b342be4368f35ddd3fe0",
+      "sha256": "4c7bc8306ae4fb414a0176417ba01f1339e3366a12089d16d86e8b4ccab22c5f",
+      "category": "supporting_docs",
+      "intended_future_phase": "Backend audio intake phase",
+      "reason": "Reference for old audio intake acceptance notes."
+    },
+    {
+      "source_path": "docs/phase-02-audio-normalization.md",
+      "destination_path": "legacy_reference/coe_decision_intelligence/supporting_docs/audio-normalization.md",
+      "source_blob_sha": "eb7d9e74968b9836af4475188addfabbb36ecd64",
+      "sha256": "1958eae73867d44b779eb3d4e3f46f95c965796fcc1a91354e26ea81e73b2186",
+      "category": "supporting_docs",
+      "intended_future_phase": "Backend audio normalization phase",
+      "reason": "Reference for old audio normalization acceptance notes."
+    }
+  ],
+  "excluded_categories": [
+    "credentials",
+    "secrets",
+    "recordings",
+    "transcripts",
+    "generated_reports",
+    "generated_outputs",
+    "android",
+    "legacy_configuration",
+    "legacy_api_server",
+    "legacy_orchestrator"
+  ]
+}
