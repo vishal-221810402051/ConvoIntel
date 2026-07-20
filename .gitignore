@@ -28,6 +28,12 @@ build/
 
 data/*
 !data/.gitkeep
+data/auth/
+
+.google-calendar/
+google_calendar_token*.json
+google_oauth_client*.json
+client_secret*.json
 
 .DS_Store
 Thumbs.db

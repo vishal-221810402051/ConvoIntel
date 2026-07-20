@@ -10,6 +10,10 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.115,<1.0",
+    "google-api-python-client>=2.198,<3",
+    "google-auth>=2.56,<3",
+    "google-auth-httplib2>=0.4,<1",
+    "google-auth-oauthlib>=1.4,<2",
     "openai>=2.46,<3",
     "uvicorn>=0.30,<1.0",
     "pydantic-settings>=2.4,<3.0",

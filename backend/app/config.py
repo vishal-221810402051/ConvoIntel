@@ -4,7 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import AliasChoices, Field, SecretStr, field_validator
+from pydantic import AliasChoices, Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from backend.app.core.paths import default_data_dir, resolve_repository_path
@@ -70,6 +70,9 @@ class Settings(BaseSettings):
     temporal_max_input_characters: int = Field(default=600000, ge=1, le=5000000)
     temporal_max_output_tokens: int = Field(default=24000, ge=1, le=100000)
     temporal_max_items: int = Field(default=300, ge=1, le=1000)
+    google_calendar_client_secret_path: Path | None = None
+    google_calendar_token_path: Path | None = None
+    google_calendar_id: str = "primary"
 
     @field_validator("environment")
     @classmethod
@@ -107,6 +110,39 @@ class Settings(BaseSettings):
         if isinstance(value, (str, Path)):
             return resolve_repository_path(value)
         raise ValueError("CONVOINTEL_DATA_DIR must be a filesystem path")
+
+    @field_validator(
+        "google_calendar_client_secret_path",
+        "google_calendar_token_path",
+        mode="before",
+    )
+    @classmethod
+    def normalize_optional_path(cls, value: object) -> Path | None:
+        if value is None or value == "":
+            return None
+        if isinstance(value, (str, Path)):
+            return resolve_repository_path(value)
+        raise ValueError("Google Calendar paths must be filesystem paths")
+
+    @field_validator("google_calendar_id")
+    @classmethod
+    def validate_google_calendar_id(cls, value: str) -> str:
+        normalized = value.strip()
+        if not normalized:
+            raise ValueError("CONVOINTEL_GOOGLE_CALENDAR_ID must not be empty")
+        if any(ord(character) < 32 for character in normalized):
+            raise ValueError(
+                "CONVOINTEL_GOOGLE_CALENDAR_ID must not contain control characters"
+            )
+        return normalized
+
+    @model_validator(mode="after")
+    def set_google_calendar_token_default(self) -> "Settings":
+        if self.google_calendar_token_path is None:
+            self.google_calendar_token_path = (
+                self.data_dir / "auth" / "google_calendar_token.json"
+            ).resolve(strict=False)
+        return self
 
     @field_validator("ffmpeg_binary", "ffprobe_binary")
     @classmethod

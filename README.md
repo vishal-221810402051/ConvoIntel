@@ -54,9 +54,15 @@ Backend Phase 8 adds deterministic local calendar recommendation generation for 
 
 See [docs/phase-08-calendar-recommendations.md](docs/phase-08-calendar-recommendations.md).
 
+## Phase 9 Capability
+
+Backend Phase 9 adds explicitly approved Google Calendar event sync for completed Phase 8 recommendations. It validates the full Phase 1-8 chain, requires literal runtime approval for one recommendation, creates or reuses one deterministic Google Calendar event through a create-only provider boundary, and writes safe sync artifacts plus metadata. It does not add automatic approval, batch sync, updates, deletes, invites, conferencing, reports, endpoints, databases, Android sync, search, or mission-specific profiles.
+
+See [docs/phase-09-google-calendar-sync.md](docs/phase-09-google-calendar-sync.md).
+
 ## Requirements
 
-Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH. Phase 4, Phase 5, Phase 6, and Phase 7 live validation require a usable OpenAI API key in `OPENAI_API_KEY` or `CONVOINTEL_OPENAI_API_KEY`. Phase 8 is deterministic and local once Phase 7 artifacts already exist.
+Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH. Phase 4, Phase 5, Phase 6, and Phase 7 live validation require a usable OpenAI API key in `OPENAI_API_KEY` or `CONVOINTEL_OPENAI_API_KEY`. Phase 8 is deterministic and local once Phase 7 artifacts already exist. Phase 9 live sync requires Google Calendar OAuth setup before use.
 
 ```powershell
 python --version
@@ -154,8 +160,32 @@ Convointel reads these environment variables:
 | `CONVOINTEL_TEMPORAL_MAX_INPUT_CHARACTERS` | `600000` |
 | `CONVOINTEL_TEMPORAL_MAX_OUTPUT_TOKENS` | `24000` |
 | `CONVOINTEL_TEMPORAL_MAX_ITEMS` | `300` |
+| `CONVOINTEL_GOOGLE_CALENDAR_CLIENT_SECRET_PATH` | unset |
+| `CONVOINTEL_GOOGLE_CALENDAR_TOKEN_PATH` | `<data_dir>/auth/google_calendar_token.json` |
+| `CONVOINTEL_GOOGLE_CALENDAR_ID` | `primary` |
 
 Example safe defaults are provided in `.env.example`. Do not commit real `.env` files.
+
+## Google Calendar Authorization
+
+Phase 9 sync does not open a browser. Run authorization separately after configuring an external OAuth client JSON path:
+
+```powershell
+$env:CONVOINTEL_GOOGLE_CALENDAR_CLIENT_SECRET_PATH = "<external-oauth-client-json>"
+$env:CONVOINTEL_GOOGLE_CALENDAR_TOKEN_PATH = "<external-token-json>"
+$env:CONVOINTEL_GOOGLE_CALENDAR_ID = "primary"
+.\.venv\Scripts\python.exe scripts\google_calendar_auth.py
+```
+
+Use a dedicated test calendar for live validation. Do not commit OAuth client files, token files, or real `.env` files.
+
+Phase 9 uses exactly this Google OAuth scope:
+
+```text
+https://www.googleapis.com/auth/calendar.events.owned
+```
+
+Only calendars owned by the authenticated operator are supported. If a token was created with a previous or different scope, discard it and run authorization again.
 
 ## Legacy reference policy
 
