@@ -36,9 +36,15 @@ Backend Phase 5 adds provider-isolated transcript cleanup for completed Phase 4 
 
 See [docs/phase-05-transcript-cleanup.md](docs/phase-05-transcript-cleanup.md).
 
+## Phase 6 Capability
+
+Backend Phase 6 adds provider-isolated general decision intelligence for completed Phase 5 packages. It verifies the full Phase 1-5 artifact chain, sends only the canonical cleaned transcript to the OpenAI Responses API as untrusted data, and writes evidence-grounded structured intelligence plus metadata. It extracts general meeting categories such as decisions, actions, commitments, risks, blockers, dependencies, unresolved questions, missing information, recommendations, and locally derived gaps. It does not add temporal normalization, calendar sync, reports, endpoints, databases, Android sync, search, or mission-specific profiles.
+
+See [docs/phase-06-general-decision-intelligence.md](docs/phase-06-general-decision-intelligence.md).
+
 ## Requirements
 
-Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH. Phase 4 and Phase 5 live validation require a usable OpenAI API key in `OPENAI_API_KEY` or `CONVOINTEL_OPENAI_API_KEY`.
+Use Windows PowerShell with Python 3.11 or newer. Phase 3 runtime validation also requires FFmpeg and FFprobe executables on PATH. Phase 4, Phase 5, and Phase 6 live validation require a usable OpenAI API key in `OPENAI_API_KEY` or `CONVOINTEL_OPENAI_API_KEY`.
 
 ```powershell
 python --version
@@ -124,6 +130,12 @@ Convointel reads these environment variables:
 | `CONVOINTEL_CLEANUP_MAX_RETRIES` | `2` |
 | `CONVOINTEL_CLEANUP_MAX_BATCH_CHARACTERS` | `50000` |
 | `CONVOINTEL_CLEANUP_MAX_OUTPUT_TOKENS` | `16000` |
+| `CONVOINTEL_INTELLIGENCE_MODEL` | `gpt-5-mini-2025-08-07` |
+| `CONVOINTEL_INTELLIGENCE_TIMEOUT_SECONDS` | `1200` |
+| `CONVOINTEL_INTELLIGENCE_MAX_RETRIES` | `2` |
+| `CONVOINTEL_INTELLIGENCE_MAX_INPUT_CHARACTERS` | `500000` |
+| `CONVOINTEL_INTELLIGENCE_MAX_OUTPUT_TOKENS` | `32000` |
+| `CONVOINTEL_INTELLIGENCE_MAX_ITEMS_PER_CATEGORY` | `100` |
 
 Example safe defaults are provided in `.env.example`. Do not commit real `.env` files.
 

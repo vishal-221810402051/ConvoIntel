@@ -14,6 +14,7 @@ SERVICE_IDENTIFIER = "convointel-backend"
 API_VERSION = "v1"
 TRANSCRIPTION_MODEL = "gpt-4o-transcribe-diarize"
 CLEANUP_MODEL = "gpt-5-mini-2025-08-07"
+INTELLIGENCE_MODEL = "gpt-5-mini-2025-08-07"
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 VALID_LOG_LEVELS = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
@@ -52,6 +53,16 @@ class Settings(BaseSettings):
     cleanup_max_retries: int = Field(default=2, ge=0, le=10)
     cleanup_max_batch_characters: int = Field(default=50000, ge=1, le=1000000)
     cleanup_max_output_tokens: int = Field(default=16000, ge=1, le=100000)
+    intelligence_model: str = INTELLIGENCE_MODEL
+    intelligence_timeout_seconds: int = Field(default=1200, ge=1, le=86400)
+    intelligence_max_retries: int = Field(default=2, ge=0, le=10)
+    intelligence_max_input_characters: int = Field(
+        default=500000,
+        ge=1,
+        le=5000000,
+    )
+    intelligence_max_output_tokens: int = Field(default=32000, ge=1, le=100000)
+    intelligence_max_items_per_category: int = Field(default=100, ge=1, le=500)
 
     @field_validator("environment")
     @classmethod
@@ -127,6 +138,16 @@ class Settings(BaseSettings):
         normalized = value.strip()
         if normalized != CLEANUP_MODEL:
             raise ValueError(f"CONVOINTEL_CLEANUP_MODEL must be {CLEANUP_MODEL}")
+        return normalized
+
+    @field_validator("intelligence_model")
+    @classmethod
+    def validate_intelligence_model(cls, value: str) -> str:
+        normalized = value.strip()
+        if normalized != INTELLIGENCE_MODEL:
+            raise ValueError(
+                f"CONVOINTEL_INTELLIGENCE_MODEL must be {INTELLIGENCE_MODEL}"
+            )
         return normalized
 
     @field_validator("transcription_language", mode="before")
