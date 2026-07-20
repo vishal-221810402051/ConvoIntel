@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "convointel"
+version = "0.1.0"
+description = "Backend foundation for the Convointel meeting-intelligence platform."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115,<1.0",
+    "uvicorn>=0.30,<1.0",
+    "pydantic-settings>=2.4,<3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0,<9.0",
+    "httpx2>=2.0,<3.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+pythonpath = ["."]
+addopts = "-ra --basetemp=.test-artifacts/tmp"
+cache_dir = ".test-artifacts/cache"
+
+[tool.setuptools.packages.find]
+include = ["backend*"]
