@@ -12,6 +12,12 @@ Backend Phase 1 provides a minimal FastAPI backend foundation with typed environ
 
 Deferred features include Android, discovery, pairing, authentication, recording, uploads, transcription, OpenAI integration, meeting intelligence, date extraction, action extraction, gap analysis, calendar integration, PDF generation, databases, dashboards, search, background workers, Docker, cloud deployment, and CI/CD.
 
+## Phase 2 Capability
+
+Backend Phase 2 adds local source-audio intake into a canonical meeting package for `.m4a`, `.mp3`, and `.wav` files. It preserves original bytes and writes typed package metadata, but it does not add uploads, normalization, transcription, intelligence, or Android sync.
+
+See [docs/phase-02-audio-intake.md](docs/phase-02-audio-intake.md).
+
 ## Requirements
 
 Use Windows PowerShell with Python 3.11 or newer.

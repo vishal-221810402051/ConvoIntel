@@ -72,6 +72,10 @@ class Settings(BaseSettings):
             return resolve_repository_path(value)
         raise ValueError("CONVOINTEL_DATA_DIR must be a filesystem path")
 
+    @property
+    def meetings_dir(self) -> Path:
+        return (self.data_dir / "meetings").resolve(strict=False)
+
 
 @lru_cache
 def get_settings() -> Settings:
